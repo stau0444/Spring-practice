@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="users">
+	<insert id="insert" parameterType="usersDto">
+		INSERT INTO 
+			USERS
+				(id,pwd,email,regdate,warnnum)
+			VALUES
+				(#{id},#{pwd},#{email},SYSDATE,0)
+	</insert>
+	<update id="update" parameterType="usersDto">
+		UPDATE 
+			users
+		SET 
+			email=#{email},profile=#{profile}
+		WHERE id=#{dto.id}
+	</update>
+	<delete id="delete" parameterType="string">
+		DELETE 
+		FROM 
+			users
+		WHERE 
+			id=#{id}
+	</delete>
+	<select id="getData" parameterType="string" resultType="usersDto">
+		SELECT 
+			id,pwd,email,profile, regdate
+		FROM 
+			users
+		WHERE 
+			id=#{id}
+	</select>
+	<select id="getList" resultType="usersDto">
+		SELECT
+			id,pwd,email,profile,to_char('regdate','yyyy/mm/dd hh24:mi:ss')as regdate,warnum
+		FROM 
+			users
+	</select>
+	
+</mapper>
