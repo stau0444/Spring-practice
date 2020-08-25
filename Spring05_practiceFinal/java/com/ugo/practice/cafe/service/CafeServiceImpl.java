@@ -53,12 +53,13 @@ public class CafeServiceImpl implements CafeService{
 		String writer=cafeDao.getContent(num).getWriter();
 		String id=(String)session.getAttribute("id");
 		
-		if(id!=writer) {
+		if(!id.equals(writer)) {
 			userDao.addwarnnum(id);
 			int warnnum=userDao.getUserInfo(id).getwarnnum();
-			if(warnnum==3) {
+			if(warnnum>3) {
 				userDao.delete(id);
-				throw new IncorrectPathException("예외 경로요청 3회로 아이디가 회원탈퇴 당하셨습니다.");
+				System.out.println("회원 삭제됨");
+				session.invalidate();
 			}
 			throw new IncorrectPathException("예외 경로로 요청하셨습니다");
 		}

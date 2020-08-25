@@ -3,7 +3,7 @@
 <mapper namespace="cafe">
 	<select id="getList" resultType="CafeDto">
 		SELECT 
-			*
+			num,writer,title,content,regdate
 		FROM 
 			board_cafe
 		ORDER BY
@@ -12,13 +12,13 @@
 	<insert id="insert" parameterType="CafeDto">
 		INSERT INTO
 			board_cafe
-			(num,sort,writer,title,content,regdate)
+			(num,writer,title,content,regdate)
 		VALUES
-			(cafe_seq.NEXTVAL,#{sort},#{writer},#{title},#{content},SYSDATE)
+			(board_cafe_seq.NEXTVAL,#{writer},#{title},#{content},SYSDATE)
 	</insert>
 	<select id="getData" parameterType="int" resultType="CafeDto">
 		SELECT
-			num,sort,writer,title,content,regdate
+			num,writer,title,content,regdate
 		FROM
 			board_cafe
 		WHERE num=#{num}
