@@ -1,13 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cafe">
-	<select id="getList" resultType="CafeDto">
-		SELECT 
-			num,writer,title,content,regdate
-		FROM 
-			board_cafe
-		ORDER BY
-			num desc
+	<select id="getList" parameterType="CafeDto" resultType="CafeDto">
+		
+		select*
+			from
+			(select result1.*,ROWNUM as rnum 
+				from
+					(SELECT num,writer,title,content,regdate 
+						from board_cafe
+						<choose>
+							<when test="title!=null and content!=null">
+								WHERE title LIKE '%'||#{title}|| '%'
+								or    content LIKE '%'||#{content}|| '%'
+							</when>
+							<when test="title!=null">
+								WHERE title LIKE '%'||#{title}|| '%'
+							</when>
+							<when test="writer!=null">
+								WHERE writer LIKE '%'||#{writer}|| '%'
+							</when>
+						</choose>
+						 ORDER BY num desc) result1)
+					where rnum between #{startRowNum} and #{endRowNum}
+	</select>
+	<select id="getCount" parameterType="CafeDto" resultType="int">
+		SELECT NVL(MAX(ROWNUM), 0)
+		FROM board_cafe
+		<choose>
+			<when test="title != null and content != null">
+				WHERE title LIKE '%'||#{title}||'%' 
+				OR content LIKE '%'||#{content}||'%'
+			</when>
+			<when test="title != null">
+				WHERE title LIKE '%'||#{title}||'%'
+			</when>
+			<when test="writer != null">
+				WHERE writer LIKE '%'||#{writer}||'%'
+			</when>
+		</choose>	
 	</select>
 	<insert id="insert" parameterType="CafeDto">
 		INSERT INTO
@@ -17,10 +48,15 @@
 			(board_cafe_seq.NEXTVAL,#{writer},#{title},#{content},SYSDATE)
 	</insert>
 	<select id="getData" parameterType="int" resultType="CafeDto">
-		SELECT
-			num,writer,title,content,regdate
+		SELECT result1.*
 		FROM
-			board_cafe
+		(SELECT
+			num,writer,title,content,viewCount,
+			TO_CHAR(regdate,'YY.MM.DD HH24:MI')AS regdate,
+			LAG(num,1,0) OVER(ORDER BY num DESC) AS prevNum,
+			LEAD(num,1,0) OVER(ORDER BY num DESC) AS nextNum
+		FROM
+			board_cafe) result1
 		WHERE num=#{num}
 		
 	</select>

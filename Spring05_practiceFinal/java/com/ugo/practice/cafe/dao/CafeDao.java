@@ -8,6 +8,7 @@ public interface CafeDao {
 	public boolean insert(CafeDto dto);
 	public boolean delete(int num);
 	public boolean update(CafeDto dto);
-	public List<CafeDto> getList();
+	public List<CafeDto> getList(CafeDto dto);
 	public CafeDto getContent(int num);
+	public int getCount(CafeDto dto);
 }

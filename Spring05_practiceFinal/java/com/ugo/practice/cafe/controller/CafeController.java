@@ -1,5 +1,6 @@
 package com.ugo.practice.cafe.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ugo.practice.cafe.dto.CafeCommentDto;
 import com.ugo.practice.cafe.dto.CafeDto;
 import com.ugo.practice.cafe.service.CafeService;
 
@@ -18,8 +20,8 @@ public class CafeController {
 	private CafeService cafeService;
 	
 	@RequestMapping("/cafe/list")
-		public ModelAndView getList(ModelAndView mView,CafeDto dto) {
-			cafeService.getList(mView);
+		public ModelAndView getList(ModelAndView mView,HttpServletRequest request) {
+			cafeService.getList(request);
 			mView.setViewName("cafe/list");
 			return mView;
 		}
@@ -35,14 +37,14 @@ public class CafeController {
 			return mView;
 		}
 	@RequestMapping("/cafe/private/detail")
-		public ModelAndView detail(ModelAndView mView ,int num) {
-			cafeService.getUserInfo(mView, num);
+		public ModelAndView detail(ModelAndView mView ,int num,HttpServletRequest request) {
+			cafeService.getUserInfo(mView, num,request);
 			mView.setViewName("cafe/detail");
 			return mView;
 		}
 	@RequestMapping("/cafe/private/update_form")
-		public ModelAndView update_form(ModelAndView mView ,int num) {
-			cafeService.getUserInfo(mView, num);
+		public ModelAndView update_form(ModelAndView mView ,int num,HttpServletRequest request) {
+			cafeService.getUserInfo(mView, num ,request);
 			mView.setViewName("cafe/update_form");
 			return mView;
 		}
@@ -56,6 +58,12 @@ public class CafeController {
 		public ModelAndView delete(ModelAndView mView,@RequestParam int num,HttpSession session) {
 			cafeService.deleteUser(mView, num,session);
 			mView.setViewName("cafe/delete");
+			return mView;
+		}
+	@RequestMapping("/cafe/private/comment_insert")
+		public ModelAndView insert_comment(HttpSession session,ModelAndView mView,CafeCommentDto dto){
+			cafeService.insertComment(mView, dto,session);
+			mView.setViewName("redirect:/cafe/private/detail?num="+dto.getRef_group());
 			return mView;
 		}
 	}

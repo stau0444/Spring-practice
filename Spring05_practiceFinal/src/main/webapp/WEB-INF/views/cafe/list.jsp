@@ -10,6 +10,20 @@
 </head>
 <body>
 	<div class="container">
+	<c:choose>
+		<c:when test="${id ne null}">
+		<strong>${id}</strong>님 로그인 되었습니다.
+			<div>
+				<a href="${pageContext.request.contextPath }/user/private/userinfo.do">내정보 |</a>
+				<a href="${pageContext.request.contextPath }/user/logout.do">로그아웃</a>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<a href="${pageContext.request.contextPath }/user/insertForm.do">회원 가입</a>
+			<a href="${pageContext.request.contextPath }/user/loginForm.do">로그인</a>
+		</c:otherwise>
+	</c:choose>
+	<a href="${pageContext.request.contextPath }/home.do">홈으로</a>
 	<h2>게시판</h2>
 	<a href="private/insert_form.do" class="float-right">글 작성</a>
 		<table class="table table-light">
@@ -44,7 +58,6 @@
 				<!-- 스타트페이지넘에서 엔드페이지넘까지 찍어낸다 -->
 				<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
 					<c:choose>
-						<!--누른 페이지넘이 페이지넘과 같다면 activ속성을 추가하는 코드 -->
 						<c:when test="${i eq pageNum }">
 							<li class="page-item active"><a class="page-link" href="list.do?pageNum=${i }&condition=${condition }&keyword=${encodedK }">${i }</a></li>
 						</c:when>
