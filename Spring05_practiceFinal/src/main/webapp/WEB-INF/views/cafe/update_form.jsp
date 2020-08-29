@@ -10,20 +10,45 @@
 </head>
 <body>
 	<div class="container">
-	<c:choose>
-		<c:when test="${id ne null}">
-		<strong>${id}</strong>님 로그인 되었습니다.
-			<div>
-				<a href="${pageContext.request.contextPath }/user/private/userinfo.do">내정보 |</a>
-				<a href="${pageContext.request.contextPath }/user/logout.do">로그아웃</a>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<a href="${pageContext.request.contextPath }/user/insertForm.do">회원 가입</a>
-			<a href="${pageContext.request.contextPath }/user/loginForm.do">로그인</a>
-		</c:otherwise>
-	</c:choose>
-	<a href="${pageContext.request.contextPath }/home.do">홈으로</a>
+	<nav class="navbar navbar-expand-lg navbar-primary bg-light mb-3">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<c:choose>
+				<c:when test="${id ne null}">
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item active"><a class="nav-link"
+								href="${pageContext.request.contextPath }/home.do">홈으로</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath }/logout.do">로그아웃</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath }/private/userinfo.do">내정보
+							</a></li>
+						</ul>
+						<strong>${id}</strong>님 로그인 되었습니다.
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item active"><a class="nav-link"
+								href="${pageContext.request.contextPath }/home.do">홈으로</a></li>
+							<li class="nav-item active"><a class="nav-link"
+								href="${pageContext.request.contextPath }/user/insertForm.do">회원
+									가입</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath }/user/loginForm.do">로그인</a>
+							</li>
+						</ul>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</nav>
 	<h1>새글 작성 양식 입니다.</h1>
 	<form action="update.do" method="post">
 		<input type="hidden" name="sort" value="1" />

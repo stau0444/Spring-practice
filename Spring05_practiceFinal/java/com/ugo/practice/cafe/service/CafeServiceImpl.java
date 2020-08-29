@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -121,6 +122,8 @@ public class CafeServiceImpl implements CafeService{
 	@Override
 	public void getUserInfo(ModelAndView mView,@RequestParam int num,HttpServletRequest request) {
 		
+		
+		
 		String keyword=request.getParameter("keyword"); //검색 키워드
 		String condition=request.getParameter("condition"); //검색 조건
 		if(keyword==null){//전달된 키워드가 없다면 
@@ -151,6 +154,58 @@ public class CafeServiceImpl implements CafeService{
 		mView.addObject("keyword", keyword);
 		mView.addObject("encodedK", encodedK);
 		
+		/* 아래는 댓글 페이징 처리 관련 비즈니스 로직 입니다.*/
+		final int PAGE_ROW_COUNT=5;
+		final int PAGE_DISPLAY_COUNT=5;
+		
+		//전체 row 의 갯수를 읽어온다.
+		//자세히 보여줄 글의 번호가 ref_group  번호 이다. 
+		int totalRow=cafeCommentDao.getCount(num);
+
+		//보여줄 페이지의 번호(만일 pageNum 이 넘어오지 않으면 가장 마지막 페이지)
+		String strPageNum=request.getParameter("pageNum");
+		//전체 페이지의 갯수 구하기
+		int totalPageCount=
+						(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+		//일단 마지막 페이지의 댓글 목록을 보여주기로 하고 
+		int pageNum=totalPageCount;
+		//만일 페이지 번호가 넘어온다면
+		if(strPageNum!=null) {
+			//넘어온 페이지에 해당하는 댓글 목록을 보여주도록 한다. 
+			pageNum=Integer.parseInt(strPageNum);
+		}
+		//보여줄 페이지 데이터의 시작 ResultSet row 번호
+		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
+		//보여줄 페이지 데이터의 끝 ResultSet row 번호
+		int endRowNum=pageNum*PAGE_ROW_COUNT;
+		
+		
+		//시작 페이지 번호
+		int startPageNum=
+			1+((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
+		//끝 페이지 번호
+		int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
+		//끝 페이지 번호가 잘못된 값이라면 
+		if(totalPageCount < endPageNum){
+			endPageNum=totalPageCount; //보정해준다. 
+		}
+		
+		// CafeCommentDto 객체에 위에서 계산된 startRowNum 과 endRowNum 을 담는다.
+		CafeCommentDto commentDto=new CafeCommentDto();
+		commentDto.setStartRowNum(startRowNum);
+		commentDto.setEndRowNum(endRowNum);
+		//ref_group 번호도 담는다.
+		commentDto.setRef_group(num);
+		
+		//DB 에서 댓글 목록을 얻어온다.
+		List<CafeCommentDto> commentList=cafeCommentDao.getList(commentDto);
+		//request 에 담아준다.
+		request.setAttribute("commentList", commentList);
+		request.setAttribute("totalPageCount", totalPageCount);
+		request.setAttribute("startPageNum", startPageNum);
+		request.setAttribute("endPageNum", endPageNum);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("num", num);
 	}
 
 	@Override
@@ -180,12 +235,28 @@ public class CafeServiceImpl implements CafeService{
 	}
 
 	@Override
-	public void insertComment(ModelAndView mView,CafeCommentDto dto,HttpSession session) {
-		int num=cafeCommentDao.getSequence();
-		dto.setWriter((String)session.getAttribute("id"));
-		if(dto.getComment_group()==0) {
-			dto.setComment_group(num);
+	public void insertComment(ModelAndView mView,HttpServletRequest request) {
+		String content=request.getParameter("content");
+		int ref_group=Integer.parseInt(request.getParameter("ref_group"));
+		String target_id=request.getParameter("target_id");
+		String writer=(String)request.getSession().getAttribute("id");
+		String comment_group=request.getParameter("comment_group");
+		int seqNum=cafeCommentDao.getSequence();
+		
+		CafeCommentDto dto=new CafeCommentDto();
+		dto.setContent(content);
+		dto.setRef_group(ref_group);
+		dto.setTarget_id(target_id);
+		dto.setWriter(writer);
+		dto.setNum(seqNum);
+		
+		if(comment_group==null) {
+			dto.setComment_group(seqNum);
+		}else {
+			dto.setComment_group(Integer.parseInt(comment_group));
 		}
 		cafeCommentDao.insert(dto);
 	}
+
+	
 }

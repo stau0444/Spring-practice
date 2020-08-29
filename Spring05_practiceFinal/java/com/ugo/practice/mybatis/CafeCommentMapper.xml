@@ -49,14 +49,13 @@
 			num,writer,content,target_id,ref_group,comment_group,deleted,profile,regdate
 		FROM
 			board_cafe_comment
+		WHERE 
+			num=#{num}
 	</select>
 	<select id="getCount" resultType="int">
-		SELECT 
-			NVL(MAX(ROWNUM,0))
-		FROM 
-			board_cafe_comment
-		WHERE
-			ref_group=#{ref_group}
+		SELECT NVL(MAX(ROWNUM), 0)
+		FROM board_cafe_comment
+		WHERE ref_group=#{ref_group}
 	</select>
 	<select id="getSeq" resultType="int">
 		SELECT
