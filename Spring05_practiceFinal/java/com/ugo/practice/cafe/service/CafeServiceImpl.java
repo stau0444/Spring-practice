@@ -109,6 +109,7 @@ public class CafeServiceImpl implements CafeService{
 				request.setAttribute("condition", condition);
 				request.setAttribute("keyword", keyword);
 				request.setAttribute("encodedK", encodedK);
+				request.setAttribute("pageNum", pageNum);
 		
 	}
 
@@ -155,8 +156,6 @@ public class CafeServiceImpl implements CafeService{
 		mView.addObject("encodedK", encodedK);
 		
 		/* 아래는 댓글 페이징 처리 관련 비즈니스 로직 입니다.*/
-		final int PAGE_ROW_COUNT=5;
-		final int PAGE_DISPLAY_COUNT=5;
 		
 		//전체 row 의 갯수를 읽어온다.
 		//자세히 보여줄 글의 번호가 ref_group  번호 이다. 
@@ -256,6 +255,12 @@ public class CafeServiceImpl implements CafeService{
 			dto.setComment_group(Integer.parseInt(comment_group));
 		}
 		cafeCommentDao.insert(dto);
+	}
+
+	@Override
+	public void deleteComment(ModelAndView mView, int num) {
+		System.out.println("삭제됨");
+		cafeCommentDao.delete(num);
 	}
 
 	

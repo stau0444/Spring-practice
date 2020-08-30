@@ -32,7 +32,7 @@ public class CafeCommentDaoImpl implements CafeCommentDao{
 
 	@Override
 	public void delete(int num) {
-		 session.delete("cafeComment.delete",num);
+		 session.update("cafeComment.delete",num);
 	}
 
 	@Override

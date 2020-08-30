@@ -16,13 +16,14 @@
 		WHERE 
 			num=#{num}
 	</update>
-	<delete id="delete" parameterType="int">
-		DELETE
-		FROM
+	<update id="delete" parameterType="int">
+		update 
 			board_cafe_comment
-		WHERE 
+		set
+			deleted='yes'
+		where 
 			num=#{num}
-	</delete>
+	</update>
 	<select id="getList" parameterType="CafeCommentDto" resultType="CafeCommentDto">
 		SELECT
 			*

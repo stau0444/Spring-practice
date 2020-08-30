@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container">
-	<nav class="navbar navbar-expand-lg navbar-primary bg-light mb-3">
+	<nav class="navbar navbar-expand-lg navbar-light bg-success mb-3">
 			<a class="navbar-brand" href="#">Navbar</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"

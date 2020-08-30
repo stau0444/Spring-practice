@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -64,6 +65,12 @@ public class CafeController {
 	@RequestMapping("/cafe/private/comment_insert")
 		public ModelAndView insert_comment(HttpServletRequest request,ModelAndView mView,@RequestParam int ref_group){
 			cafeService.insertComment(mView,request);
+			mView.setViewName("redirect:/cafe/private/detail.do?num="+ref_group);
+			return mView;
+		}
+	@RequestMapping(value="/cafe/private/comment_delete",method = RequestMethod.GET)
+	public ModelAndView delete_comment(int num,ModelAndView mView,@RequestParam int ref_group){
+			cafeService.deleteComment(mView,num);
 			mView.setViewName("redirect:/cafe/private/detail.do?num="+ref_group);
 			return mView;
 		}

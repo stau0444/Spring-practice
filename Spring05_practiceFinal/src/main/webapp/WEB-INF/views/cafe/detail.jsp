@@ -22,11 +22,14 @@
 		border-top:1px solid grey;
 		margin-top:50px;
 	}
+	.comment-reply-form,.comment-update-form{
+		display:none;
+	}
 </style>
 </head>
 <body>
 	<div class="container">
-		<nav class="navbar navbar-expand-lg navbar-primary bg-light mb-3">
+		<nav class="navbar navbar-expand-lg navbar-light bg-success mb-3">
 		  <a class="navbar-brand" href="#">Navbar</a>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
@@ -107,26 +110,76 @@
 			</table>
 			<div class="contents">${dto.content }</div>
 			<c:if test="${id eq dto.writer }">
-				<a href="update_form.do?num=${dto.num}" class="btn btn-outline-success">글 수정</a>
-				<a href="delete.do?num=${dto.num }" class="btn btn-outline-danger">글 삭제</a>
+				<div class="float-right my-3">
+					<a href="update_form.do?num=${dto.num}" class="btn btn-outline-success">글 수정</a>
+					<a href="delete.do?num=${dto.num }" class="btn btn-outline-danger">글 삭제</a>
+				</div>
 			</c:if>
-			<div> <strong>댓글</strong></div>
-			<ul class="pl-0">
+			
+			<ul class="pl-0 mt-5">
+				 <strong>댓글</strong>
 				<c:forEach var="tmp" items="${commentList}">
-					<li class="mt-2 ">
-						<div class="alert alert-success" role="alert">
-						  <p class="alert-heading">작성자:${tmp.writer } 작성일:${tmp.regdate }</p>
-						  <p>${tmp.content }</p>
-						  <hr>
-						  <c:if test="${id eq tmp.writer}">
-						 	 <p class="mb-0" >
-							 	 <a href="">답글</a> 
-							 	 <a href="">수정</a>
-							 	 <a href="" class="text-danger">삭제</a>
-						 	 </p>
-						  </c:if>
-						</div>
-					</li>
+				<c:choose>
+					<c:when test="${tmp.deleted eq 'yes' }">
+						<li><p class="alert alert-danger">삭제된 댓글입니다.</p></li>
+					</c:when>
+					<c:otherwise>
+						<li id="comment${tmp.num}"  class="mt-2 " <c:if test="${tmp.num ne tmp.comment_group }">style="padding-left:50px;"</c:if>>
+								<c:if test="${tmp.num ne tmp.comment_group }"><svg class="reply-icon" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-return-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			  						<path fill-rule="evenodd" d="M10.146 5.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 9l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
+			  						<path fill-rule="evenodd" d="M3 2.5a.5.5 0 0 0-.5.5v4A2.5 2.5 0 0 0 5 9.5h8.5a.5.5 0 0 0 0-1H5A1.5 1.5 0 0 1 3.5 7V3a.5.5 0 0 0-.5-.5z"/></svg>
+								</c:if>
+							  <div class="alert alert-success" role="alert">
+							  <p class="alert-heading">
+								  	<strong>${tmp.writer } <span class="text-danger">to</span> ${tmp.target_id}</strong> 
+								  	 | ${tmp.content }
+								  	<small class="float-right mr-1">${tmp.regdate}</small>
+							  <c:if test="${id eq tmp.writer}">
+								 	 <a href="javascript:" data-num="${tmp.num}" class="deleteBtn text-danger float-right mr-1">삭제</a>
+								 	 <a href="javascript:" class="updateBtn float-right mr-1">수정</a>
+								 	 <a href="javascript:" data-num="${tmp.num}" class="replyBtn float-right mr-1">답글</a> 
+							 	 	 
+							 	 	 <!-- 댓글의 댓글 폼 -->
+								 	 
+								 	 <form class="comment-reply-form" action="comment_insert.do">
+										<!-- 원글의 번호가 댓글의 참조번호가 된다.-->
+										<input class="ref_group" type="hidden" name="ref_group" value="${dto.num}" />
+										<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
+										<input class="target_id" type="hidden" name="target_id" value="${tmp.writer }" />
+										<input class="comment_group" type="hidden" name="comment_group" value="${tmp.comment_group }" />
+										<!-- 댓글의 내용 -->
+										<div class="input-group mt-1">
+											  <div class="input-group-prepend">
+											    <span class="input-group-text">답글 달기</span>
+											  </div>
+											<textarea id="content" class="form-control" name="content"></textarea>
+										<button class="btn btn-outline-success" type="submit">등록</button>
+										</div>
+									</form>
+									
+									<!-- 댓글 수정폼 -->
+									
+									<form class="comment-update-form" action="comment_update.do">
+										<!-- 원글의 번호가 댓글의 참조번호가 된다.-->
+										<input class="ref_group" type="hidden" name="ref_group" value="${dto.num}" />
+										<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
+										<input class="target_id" type="hidden" name="target_id" value="${tmp.writer }" />
+										<input class="comment_group" type="hidden" name="comment_group" value="${tmp.comment_group }" />
+										<!-- 댓글의 내용 -->
+										<div class="input-group mt-1">
+											  <div class="input-group-prepend">
+											    <span class="input-group-text">댓글 수정</span>
+											  </div>
+											<textarea id="content" class="form-control" name="content"></textarea>
+										<button class="btn btn-outline-success" type="submit">수정</button>
+										</div>
+									</form>
+							  </c:if>
+							  </p>
+							</div>
+						</li>
+					</c:otherwise>
+				</c:choose>
 				</c:forEach>
 			</ul>
 			<div class="page-display d-flex justify-content-center">
@@ -164,11 +217,71 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text">댓글달기</span>
 					  </div>
-					<textarea class="form-control" name="content"></textarea>
+					<textarea id="commentInput"class="form-control" name="content"></textarea>
 				<button class="btn btn-outline-success" type="submit">등록</button>
 				</div>
 			</form>
 	</div>
 	<div class="footer"></div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/jquery.form.min.js"></script>
+<script>
+	$(".replyBtn").on("click",function(){
+		var selectedForm=$(this).parent().parent().children(".comment-reply-form");
+		if($(this).text()=="답글"){
+			selectedForm.show();
+			$(this).text("취소");
+		}else if($(this).text()=="취소"){
+			selectedForm.hide();
+			$(this).text("답글");
+		}
+	})
+	
+	$(".updateBtn").on("click",function(){
+		var selectedForm=$(this).parent().parent().children(".comment-update-form");
+		if($(this).text()=="수정"){
+			selectedForm.show();
+			$(this).text("취소");
+		}else if($(this).text()=="취소"){
+			selectedForm.hide();
+			$(this).text("수정");
+		}
+	})
+	
+	//댓글 삭제
+	$(document).on("click",".deleteBtn", function(){
+		//삭제할 글번호 
+		var num=$(this).attr("data-num");
+		var isDelete=confirm("댓글을 삭제 하시겠습니까?");
+		if(isDelete){
+			location.href="${pageContext.request.contextPath }/cafe/private/comment_delete.do?num="+num+"&ref_group=${dto.num}";
+		}
+	});
+	
+	//답글 입력
+	$(document).on("submit",".comment-reply-form", function(){
+			
+		$(this).ajaxSubmit(function(data){
+			console.log(data);
+			location.reload();
+		});
+		return false;
+	});
+	
+	
+	//댓글 null값 처리
+	$(".comment-insert-form").on("submit",function(){
+		
+		if($("#commentInput").val()==""){
+			alert("댓글을 입력해주세요!");
+			return false;
+		}else{
+			$(this).submit();
+		}
+		return false;
+	})
+	
+</script>
+
 </html>
