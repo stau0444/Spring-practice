@@ -18,4 +18,5 @@ public interface CafeService{
 	public void deleteUser(ModelAndView mView,int num,HttpSession session);
 	public void insertComment(ModelAndView mView,HttpServletRequest request);
 	public void deleteComment(ModelAndView mView,int num);
+	public void updateComment(ModelAndView mView,CafeCommentDto dto);
 }

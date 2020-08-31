@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ugo.practice.cafe.dto.CafeCommentDto;
 import com.ugo.practice.user.dto.UsersDto;
 
 public interface UsersService {

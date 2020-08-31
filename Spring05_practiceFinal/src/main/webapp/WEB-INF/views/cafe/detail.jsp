@@ -159,12 +159,13 @@
 									
 									<!-- 댓글 수정폼 -->
 									
-									<form class="comment-update-form" action="comment_update.do">
+									<form class="comment-update-form" action="comment_update.do" method="post">
 										<!-- 원글의 번호가 댓글의 참조번호가 된다.-->
 										<input class="ref_group" type="hidden" name="ref_group" value="${dto.num}" />
 										<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
 										<input class="target_id" type="hidden" name="target_id" value="${tmp.writer }" />
 										<input class="comment_group" type="hidden" name="comment_group" value="${tmp.comment_group }" />
+										<input type="hidden" name="num" value="${tmp.num}" />
 										<!-- 댓글의 내용 -->
 										<div class="input-group mt-1">
 											  <div class="input-group-prepend">
@@ -261,6 +262,16 @@
 	
 	//답글 입력
 	$(document).on("submit",".comment-reply-form", function(){
+			
+		$(this).ajaxSubmit(function(data){
+			console.log(data);
+			location.reload();
+		});
+		return false;
+	});
+	
+	//댓글수정
+	$(document).on("submit",".comment-update-form", function(){
 			
 		$(this).ajaxSubmit(function(data){
 			console.log(data);

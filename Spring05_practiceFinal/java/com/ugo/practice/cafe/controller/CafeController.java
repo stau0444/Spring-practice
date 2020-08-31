@@ -74,5 +74,12 @@ public class CafeController {
 			mView.setViewName("redirect:/cafe/private/detail.do?num="+ref_group);
 			return mView;
 		}
+	@RequestMapping(value="/cafe/private/comment_update",method = RequestMethod.POST)
+	public ModelAndView comment_update(ModelAndView mView,CafeCommentDto dto){
+			cafeService.updateComment(mView, dto);
+			mView.setViewName("redirect:/cafe/private/detail.do?num="+dto.getRef_group());
+			return mView;
+		}
 	}
+	
 	
