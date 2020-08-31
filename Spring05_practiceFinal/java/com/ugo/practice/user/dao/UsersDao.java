@@ -12,4 +12,5 @@ public interface UsersDao {
 	public UsersDto getUserInfo(String id);
 	public boolean updatePwd(UsersDto dto);
 	public void addwarnnum(String id);
+	public boolean checkId(String id);
 }

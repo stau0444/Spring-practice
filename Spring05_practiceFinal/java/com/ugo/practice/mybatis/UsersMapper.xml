@@ -36,6 +36,14 @@
 		FROM 
 			users
 	</select>
+	<select id="checkId" resultType="string" parameterType="string">
+		SELECT
+			id 
+		FROM 
+			users
+		WHERE 
+			id=#{id}
+	</select>
 	<update id="updatePwd" parameterType="usersDto">
 		UPDATE
 			users

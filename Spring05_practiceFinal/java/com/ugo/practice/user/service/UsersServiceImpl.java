@@ -1,5 +1,8 @@
 package com.ugo.practice.user.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +91,14 @@ public class UsersServiceImpl implements UsersService {
 		}else {
 			mView.addObject("isValid", false);
 		}	
+	}
+
+	@Override
+	public Map<String, Object> checkId(String id) {
+		boolean isValid=usersDao.checkId(id);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("isValid", isValid );
+		return map;
 	}
 
 	

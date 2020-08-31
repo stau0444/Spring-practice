@@ -1,11 +1,14 @@
 package com.ugo.practice.user.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ugo.practice.user.dto.UsersDto;
@@ -46,6 +49,12 @@ public class UsersController {
 		mView.addObject("isLogOut",isLogOut);
 		mView.setViewName("logout");
 		return mView;
+	}
+	@RequestMapping("/user/checkid")
+	@ResponseBody
+	public Map<String, Object> checkId(String id) {
+		System.out.println("들어옴");
+		return service.checkId(id);
 	}
 	@RequestMapping("/private/userinfo")
 		public ModelAndView userInfo(ModelAndView mView,HttpSession session) {

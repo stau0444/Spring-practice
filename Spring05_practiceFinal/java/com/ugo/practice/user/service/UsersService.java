@@ -1,5 +1,7 @@
 package com.ugo.practice.user.service;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
@@ -14,4 +16,5 @@ public interface UsersService {
 	public void updateUserInfo(ModelAndView mView, HttpSession session,UsersDto dto);
 	public void updatePwd(ModelAndView mView,HttpSession session,UsersDto dto);
 	public void delete(ModelAndView mView,String pwd,HttpSession session);
+	public Map<String,Object> checkId(String id);
 }

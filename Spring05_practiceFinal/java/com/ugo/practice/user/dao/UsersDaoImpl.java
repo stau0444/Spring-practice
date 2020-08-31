@@ -81,4 +81,15 @@ public class UsersDaoImpl implements UsersDao {
 	public void addwarnnum(String id) {
 		session.update("users.addwarnnum",id);	
 	}
+
+	@Override
+	public boolean checkId(String id) {
+		 String isValid=session.selectOne("users.checkId", id);
+		 System.out.println("아이디check됨");
+		 if(isValid==null) {
+			 return true;
+		 }else {
+			 return false;
+		 }
+	}
 }
