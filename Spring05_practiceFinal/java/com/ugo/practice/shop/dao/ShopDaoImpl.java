@@ -51,4 +51,20 @@ public class ShopDaoImpl implements ShopDao {
 		int price=session.selectOne("shop.getPrice", num);
 		return price;
 	}
+
+	@Override
+	public boolean insert(ShopDto dto) {
+		int isInserted=session.insert("shop.insert",dto);
+		if(isInserted>0) {
+			return true;
+		}else {
+			return false;			
+		}
+	}
+
+	@Override
+	public int getMaxRowNum() {
+		int MaxRowNum=session.selectOne("shop.getMRN");
+		return MaxRowNum;
+	}
 }

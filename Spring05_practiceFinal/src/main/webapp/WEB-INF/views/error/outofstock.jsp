@@ -8,6 +8,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
 </head>
 <body>
-	<p class="alert alert-danger">의도적으로 잘못된 경로를 입력했습니다 3회이상 입력시 강제로 회원탈퇴 됩니다  남은 횟수:${warnnum}</p>
+	<p class="alert alert-danger">품절인 제품입니다   <a href="shop/list.do">상품목록으로</a></p>
 </body>
 </html>

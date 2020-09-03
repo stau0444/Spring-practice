@@ -16,4 +16,20 @@ public class ExceptionController {
 		mView.setViewName("error/info");
 		return mView;
 	}
+	
+	@ExceptionHandler(AccountEmptyException.class)
+	public ModelAndView AccountEmpty(AccountEmptyException aee) {
+		ModelAndView mView=new ModelAndView();
+		mView.addObject("exception",aee);
+		mView.setViewName("error/accountempty");
+		return mView;
+	}
+	@ExceptionHandler(OutOfStockException.class)
+	public ModelAndView OutOfStock(OutOfStockException OOS) {
+		ModelAndView mView=new ModelAndView();
+		mView.addObject("exception",OOS);
+		mView.setViewName("error/outofstock");
+		return mView;
+	}
 }
+

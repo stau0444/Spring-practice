@@ -10,6 +10,7 @@
 </head>
 <body>
 <div class="container">
+	<a href="insert_form.do">상품등록</a>
 	<c:choose>
 		<c:when test="${empty id }">
 			<p>
@@ -26,7 +27,7 @@
 	<h1>상품 목록 입니다.</h1>
 	<div class="row">
 		<c:forEach var="tmp" items="${list }">
-			<div class="col">
+			<div class="col my-3">
 				<div class="card">
 					<img class="card-img-top" src="${pageContext.request.contextPath }/resources/images/wyattEarp.jpg"/>
 					<div class="card-body">
@@ -35,12 +36,37 @@
 							가격 : <strong>${tmp.price }</strong>원 <br/>
 							재고 : <strong>${tmp.remainCount }</strong>개
 						</p>
-						<a href="buy.do?num=${tmp.num }" class="card-link">구입하기</a>
+						<c:choose>
+							<c:when test="${tmp.remainCount eq 0 }">
+								<p>품절</p>
+							</c:when>
+							<c:otherwise>
+								<a href="buy.do?num=${tmp.num }" class="card-link">구입하기</a>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
-			</div>		
+			</div>
+			<c:choose>
+				<c:when test="${tmp.rownum%3 eq 0}">
+					<div class="w-100"></div>
+				</c:when>
+			</c:choose>
 		</c:forEach>
+			<c:choose>
+				<c:when test="${MaxRowNum%3 eq 1}">
+					<div class="col"></div>
+					<div class="col"></div>
+				</c:when>
+				<c:when test="${MaxRowNum%3 eq 2}">
+					<div class="col"></div>
+				</c:when>
+				<c:otherwise>
+					
+				</c:otherwise>
+			</c:choose>
 	</div>
+	<a href="detail.do">상품디테일</a>
 </div>
 </body>
 </html>

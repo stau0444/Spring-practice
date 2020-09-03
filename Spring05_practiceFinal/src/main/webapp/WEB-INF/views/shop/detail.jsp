@@ -8,6 +8,16 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
 </head>
 <body>
-	<p class="alert alert-danger">의도적으로 잘못된 경로를 입력했습니다 3회이상 입력시 강제로 회원탈퇴 됩니다  남은 횟수:${warnnum}</p>
+	<div class="container border">
+		<div class="row border">
+			<div class="col border">
+				
+			</div>
+			
+			<div class="col border">
+			
+			</div>
+		</div>
+	</div>
 </body>
 </html>

@@ -6,16 +6,18 @@ public class ShopDto {
 	private int price;
 	private int remainCount;
 	private String id;
+	private int rownum;
 	
 	public ShopDto() {}
 
-	public ShopDto(int num, String name, int price, int remainCount, String id) {
+	public ShopDto(int num, String name, int price, int remainCount, String id,int rownum) {
 		super();
 		this.num = num;
 		this.name = name;
 		this.price = price;
 		this.remainCount = remainCount;
 		this.id = id;
+		this.rownum=rownum;
 	}
 
 	public int getNum() {
@@ -56,6 +58,14 @@ public class ShopDto {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
 	}
 	
 }

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop">
 	<select id="getList" resultType="shopDto">
-		SELECT num,name,price,remainCount
+		SELECT num,name,price,remainCount,rownum
 		FROM shop
-		ORDER BY num ASC
+		ORDER BY rownum ASC
 	</select>
 	<update id="minusCount" parameterType="int">
 		UPDATE shop
@@ -31,4 +31,12 @@
 		(num, id, code, addr)
 		VALUES(client_order_seq.NEXTVAL, #{id}, #{code}, #{addr})
 	</insert>
+	<insert id="insert" parameterType="shopDto">
+		INSERT INTO shop
+		(num,name,price,remainCount)
+		VALUES(shop_seq.NEXTVAL,#{name},#{price},#{remainCount})
+	</insert>
+	<select id="getMRN" resultType="int">
+		SELECT MAX(ROWNUM) FROM SHOP
+	</select>
 </mapper>

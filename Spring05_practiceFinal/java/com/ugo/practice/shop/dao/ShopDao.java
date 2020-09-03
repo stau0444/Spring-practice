@@ -10,4 +10,6 @@ public interface ShopDao {
 	public boolean minusMoney(ShopDto dto);
 	public void plusPoint(ShopDto dto);
 	public int getPrice(int num);
+	public boolean insert(ShopDto dto);
+	public int getMaxRowNum();
 }
