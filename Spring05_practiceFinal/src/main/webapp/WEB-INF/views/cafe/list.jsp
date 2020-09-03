@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
+<script scr="${pageContext.request.contextPath }/resources/js/popper.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
 <style>
 	/* Reset Select */
 select {
@@ -26,6 +29,7 @@ select::-ms-expand {
 }
 /* Custom Select */
 .select {
+  font-size:12px;
   position: relative;
   display: flex;
   width: auto;
@@ -152,19 +156,19 @@ select {
 				</ul>	
 		</div>
 		<!-- 검색키워드를 전송하는 폼 -->
-		<form action="list.do" method="get" class="float-right" class="w-auto">
+		<form action="list.do" method="get" class="float-right">
 			<!-- 검색 조건을 고르는 select 선택된 것의 value가 서버로 넘어가고 응답받았을때 condition이 선택한것과 같게 만들어야하기 때문에 selected를 조건별로 넣어준다.-->
-			<div class="form-inline my-2 my-lg-0">
-				<label for="condition"></label>
-				<select name="condition" id="condition" class="select">
-					<option value="title_content" <c:if test="${condition eq 'title_content' }">selected</c:if>>제목+내용</option>
-					<option value="title" <c:if test="${condition eq 'title' }">selected</c:if>>제목</option>
-					<option value="writer" <c:if test="${condition eq 'writer' }">selected</c:if>>작성자</option>
-				</select>
-			  <input class="form-control mr-sm-2" value="${keyword }" type="text" name="keyword" placeholder="검색어..."/>
-		      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-		    </div>
+				<div class="form-inline my-2  row">
+					<select name="condition" id="condition " class="select col">
+						<option value="title_content" <c:if test="${condition eq 'title_content' }">selected</c:if>>제목+내용</option>
+						<option value="title" <c:if test="${condition eq 'title' }">selected</c:if>>제목</option>
+						<option value="writer" <c:if test="${condition eq 'writer' }">selected</c:if>>작성자</option>
+					</select>
+					  <input class="form-control mr-2 col-6" value="${keyword }" type="text" name="keyword" placeholder="검색어..."/>
+				      <button class="btn btn-outline-success my-2 col" type="submit">검색</button>
+			    </div>
 		</form>	
 	</div>
+		
 </body>
 </html>

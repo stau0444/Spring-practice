@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 //필터 선언 할때 어노테이션 필요 필터가 적용될 경로 
-@WebFilter({"/users/private/*","/cafe/private/*"})
+@WebFilter({"/users/private/*","/cafe/private/*","/shop/*"})
 public class LoginFilter implements Filter{
 
 

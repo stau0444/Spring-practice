@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
+<script scr="${pageContext.request.contextPath }/resources/js/popper.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
 </head>
 <body>	
 	<div class="container">
@@ -46,6 +49,7 @@
 			</c:choose>
 		</nav>
 		<a href="cafe/list.do">게시판으로 이동</a>
+		<li><a href="shop/list.do">상품 목록 보기</a></li>
 	</div>
 </body>
 </html>

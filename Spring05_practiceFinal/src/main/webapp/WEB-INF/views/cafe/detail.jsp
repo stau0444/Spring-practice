@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
+<script scr="${pageContext.request.contextPath }/resources/js/popper.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
 <style>
 	li{
 		list-style: none;
@@ -64,6 +67,7 @@
 			       	<a class="nav-link" href="${pageContext.request.contextPath }/user/loginForm.do">로그인</a>
 			      </li>
 			    </ul>
+
 			  </div>
 			  </c:otherwise>
 			</c:choose>
@@ -225,7 +229,7 @@
 	</div>
 	<div class="footer"></div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script src="${pageContext.request.contextPath }/resources/js/jquery.form.min.js"></script>
 <script>
 	$(".replyBtn").on("click",function(){

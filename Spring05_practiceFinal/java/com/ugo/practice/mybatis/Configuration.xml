@@ -5,10 +5,14 @@
 		<typeAlias type="com.ugo.practice.cafe.dto.CafeDto" alias="CafeDto"/>
 		<typeAlias type="com.ugo.practice.cafe.dto.CafeCommentDto" alias="CafeCommentDto"/>
 		<typeAlias type="com.ugo.practice.user.dto.UsersDto" alias="usersDto"/>
+		<typeAlias type="com.ugo.practice.shop.dto.ShopDto" alias="shopDto"/>
+		<typeAlias type="com.ugo.practice.shop.dto.OrderDto" alias="orderDto"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="com/ugo/practice/mybatis/CafeCommentMapper.xml"/>
 		<mapper resource="com/ugo/practice/mybatis/UsersMapper.xml"/>
 		<mapper resource="com/ugo/practice/mybatis/CafeMapper.xml"/>
+		<mapper resource="com/ugo/practice/mybatis/ShopMapper.xml"/>
+		<mapper resource="com/ugo/practice/mybatis/OrderMapper.xml"/>
 	</mappers>
 </configuration>

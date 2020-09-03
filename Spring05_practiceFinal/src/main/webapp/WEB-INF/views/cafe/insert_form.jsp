@@ -10,9 +10,12 @@
 
 </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
+<script scr="${pageContext.request.contextPath }/resources/js/popper.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/angular.min.js"></script>
 </head>
-
-<body>
+<body ng-app>
 	<div class="container">
 	<nav class="navbar navbar-expand-lg navbar-light bg-success mb-3">
 			<a class="navbar-brand" href="#">Navbar</a>
@@ -55,7 +58,7 @@
 		</nav>
 	<a href="${pageContext.request.contextPath }/home.do">홈으로</a>
 	<h1>새글 작성 양식 입니다.</h1>
-	<form action="insert.do" method="post">
+	<form action="insert.do" method="post" name="myForm">
 		<input type="hidden" name="sort" value="1" />
 		<input type="hidden" name="writer" value="${id}" />
 		<div class="form-group">
@@ -64,13 +67,20 @@
 		</div>
 		<div class="form-group">
 			<label for="title">제목</label>
-			<input class="form-control" type="text" name="title" id="title"/>
+			<input class="form-control" type="text" name="title" id="title"
+			ng-model="title"
+			ng-required="true"
+			/>
 		</div>
 		<div class="form-group">
 			<label for="content">내용</label>
-			<textarea class="form-control" name="content" id="content"></textarea>
+			<textarea class="form-control" name="content" id="content"
+			ng-model="content"
+			ng-required="true"
+			></textarea>
 		</div>
-		<button class="btn btn-outline-primary" type="submit" onclick="submitContents(this);">저장</button>
+		<button class="btn btn-outline-primary" type="submit" onclick="submitContents(this);"
+		ng-disabled="myForm.$invalid">저장</button>
 		<button class="btn btn-outline-warning" type="reset">취소</button>
 	</form>
 </div>
