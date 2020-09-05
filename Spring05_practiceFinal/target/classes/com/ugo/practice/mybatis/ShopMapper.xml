@@ -2,9 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop">
 	<select id="getList" resultType="shopDto">
-		SELECT num,name,price,remainCount,rownum
-		FROM shop
-		ORDER BY rownum ASC
+		select*
+			from
+			(select result1.*,ROWNUM as rnum 
+				from
+					(SELECT num,name,price,remainCount,image,rownum
+						from shop
+						<choose>
+							
+							<when test="name!=null">
+								WHERE name LIKE '%'||#{name}|| '%'
+							</when>
+							
+						</choose>
+						 ORDER BY num desc) result1)
+				where rnum between #{startRowNum} and #{endRowNum}
 	</select>
 	<update id="minusCount" parameterType="int">
 		UPDATE shop
@@ -33,10 +45,15 @@
 	</insert>
 	<insert id="insert" parameterType="shopDto">
 		INSERT INTO shop
-		(num,name,price,remainCount)
-		VALUES(shop_seq.NEXTVAL,#{name},#{price},#{remainCount})
+		(num,name,price,remainCount,image)
+		VALUES(shop_seq.NEXTVAL,#{name},#{price},#{remainCount},#{image})
 	</insert>
-	<select id="getMRN" resultType="int">
-		SELECT MAX(ROWNUM) FROM SHOP
+	<select id="getMRN" resultType="int" parameterType="shopDto">
+		SELECT NVL(MAX(ROWNUM), 0) FROM SHOP
+		<choose>
+			<when test="name != null">
+				WHERE name LIKE '%'||#{name}||'%' 
+			</when>
+		</choose>
 	</select>
 </mapper>

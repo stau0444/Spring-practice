@@ -1,5 +1,6 @@
 package com.ugo.practice.exception;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,13 +18,13 @@ public class ExceptionController {
 		return mView;
 	}
 	
-	@ExceptionHandler(AccountEmptyException.class)
-	public ModelAndView AccountEmpty(AccountEmptyException aee) {
-		ModelAndView mView=new ModelAndView();
-		mView.addObject("exception",aee);
-		mView.setViewName("error/accountempty");
-		return mView;
-	}
+//	@ExceptionHandler(DataAccessException.class)
+//	public ModelAndView AccountEmpty(DataAccessException aee) {
+//		ModelAndView mView=new ModelAndView();
+//		mView.addObject("exception",aee);
+//		mView.setViewName("error/accountempty");
+//		return mView;
+//	}
 	@ExceptionHandler(OutOfStockException.class)
 	public ModelAndView OutOfStock(OutOfStockException OOS) {
 		ModelAndView mView=new ModelAndView();

@@ -8,6 +8,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
 </head>
 <body>
-	<p class="alert alert-danger">계좌 잔액이 부족합니다   <a href="shop/list.do">상품목록으로</a></p>
+	<p class="alert alert-danger">계좌 잔액이 부족합니다   <a href="list.do">상품목록으로</a></p>
 </body>
 </html>

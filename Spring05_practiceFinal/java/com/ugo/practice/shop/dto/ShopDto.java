@@ -7,17 +7,24 @@ public class ShopDto {
 	private int remainCount;
 	private String id;
 	private int rownum;
+	private int startRowNum;
+	private int endRowNum;
+	private String image;
 	
 	public ShopDto() {}
 
-	public ShopDto(int num, String name, int price, int remainCount, String id,int rownum) {
+	public ShopDto(int num, String name, int price, int remainCount, String id, int rownum, int startRowNum,
+			int endRowNum,String image) {
 		super();
 		this.num = num;
 		this.name = name;
 		this.price = price;
 		this.remainCount = remainCount;
 		this.id = id;
-		this.rownum=rownum;
+		this.rownum = rownum;
+		this.startRowNum = startRowNum;
+		this.endRowNum = endRowNum;
+		this.image=image;
 	}
 
 	public int getNum() {
@@ -67,5 +74,28 @@ public class ShopDto {
 	public void setRownum(int rownum) {
 		this.rownum = rownum;
 	}
-	
+
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 }

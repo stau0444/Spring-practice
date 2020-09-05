@@ -1,10 +1,15 @@
 package com.ugo.practice.shop.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ugo.practice.shop.dto.ShopDto;
@@ -17,8 +22,8 @@ public class ShopController {
 	private ShopService shopService;
 	
 	@RequestMapping("/shop/list")
-	public ModelAndView list(ModelAndView mView) {
-		shopService.getList(mView);
+	public ModelAndView list(HttpServletRequest request,ModelAndView mView) {
+		shopService.getList(request);
 		mView.setViewName("shop/list");
 		return mView;
 	}
@@ -38,8 +43,15 @@ public class ShopController {
 	}
 	@RequestMapping("/shop/insert")
 	public ModelAndView insert(ModelAndView mView,ShopDto dto) {
+		System.out.println("컨트롤러:"+dto.getImage());
 		shopService.insertProduct(mView, dto);
 		mView.setViewName("shop/insert");
 		return mView;
+	}
+	@RequestMapping("/shop/image_upload")
+	@ResponseBody
+	public Map<String, Object> savaProductImage(HttpServletRequest request,@RequestParam MultipartFile image){
+		Map<String,Object> map=shopService.saveProductImage(request,image);
+		return map; 
 	}
 }

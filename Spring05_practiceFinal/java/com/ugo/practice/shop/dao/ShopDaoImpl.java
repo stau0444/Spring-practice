@@ -15,8 +15,9 @@ public class ShopDaoImpl implements ShopDao {
 	private SqlSession session;
 
 	@Override
-	public List<ShopDto> getList() {
-		List<ShopDto> list=session.selectList("shop.getList");
+	public List<ShopDto> getList(ShopDto dto) {
+		List<ShopDto> list=session.selectList("shop.getList",dto);
+		System.out.println(list.size());
 		return list;
 	}
 
@@ -63,8 +64,9 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
-	public int getMaxRowNum() {
-		int MaxRowNum=session.selectOne("shop.getMRN");
+	public int getMaxRowNum(ShopDto dto) {
+		int MaxRowNum=session.selectOne("shop.getMRN",dto);
+		System.out.println("max:"+MaxRowNum);
 		return MaxRowNum;
 	}
 }
